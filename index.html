@@ -16,26 +16,22 @@
             align-items: center;
             min-height: 100vh;
         }
-        
         .container {
             text-align: center;
-            max-width: 800px;
+            max-width: 900px;
             padding: 20px;
             margin-top: 50px;
         }
-        
         img {
             max-width: 100%;
             height: auto;
             margin-bottom: 30px;
             border: 1px solid #ddd;
         }
-        
         h1 {
             font-size: 2.5em;
             margin-bottom: 10px;
         }
-        
         h2 {
             font-size: 1.5em;
             font-weight: normal;
@@ -47,21 +43,28 @@
             padding: 20px;
             background-color: #f5f5f5;
             border-radius: 8px;
-            max-width: 500px;
-            margin-left: auto;
-            margin-right: auto;
+            width: 100%;
+            max-width: 900px;
+            box-sizing: border-box;
         }
-        
-        .text-to-copy {
-            font-family: monospace;
+        .code-container {
+            position: relative;
             background-color: white;
-            padding: 15px;
             border-radius: 5px;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             border: 1px solid #ddd;
-            word-break: break-all;
+            overflow: hidden;
         }
-        
+        pre {
+            margin: 0;
+            padding: 20px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.4;
+            white-space: pre;
+            text-align: left;
+        }
         .copy-button {
             width: 50px;
             height: 50px;
@@ -75,22 +78,18 @@
             margin: 0 auto;
             transition: all 0.3s ease;
         }
-        
         .copy-button:hover {
             background-color: #0056b3;
             transform: scale(1.05);
         }
-        
         .copy-button:active {
             transform: scale(0.95);
         }
-        
         .copy-button svg {
             width: 24px;
             height: 24px;
             fill: white;
         }
-        
         .copy-notification {
             margin-top: 10px;
             color: #28a745;
@@ -99,41 +98,48 @@
             opacity: 0;
             transition: opacity 0.3s ease;
         }
-        
         .copy-notification.show {
             opacity: 1;
         }
-        
+        .loading {
+            padding: 20px;
+            text-align: center;
+            color: #666;
+        }
+        .error {
+            padding: 20px;
+            text-align: center;
+            color: #dc3545;
+        }
         @media (prefers-color-scheme: dark) {
             body {
                 background-color: black;
                 color: white;
             }
-            
             h2 {
                 color: #aaa;
             }
-            
             img {
                 border-color: #444;
             }
-            
             .copy-section {
                 background-color: #1a1a1a;
             }
-            
-            .text-to-copy {
+            .code-container {
                 background-color: #222;
                 border-color: #444;
+            }
+            pre {
                 color: #fff;
             }
-            
             .copy-button {
                 background-color: #0d6efd;
             }
-            
             .copy-button:hover {
                 background-color: #0b5ed7;
+            }
+            .loading {
+                color: #aaa;
             }
         }
     </style>
@@ -144,157 +150,106 @@
         <h1>привет</h1>
         <h2>r1gor</h2>
         <div class="copy-section">
-            <div class="text-to-copy" id="textToCopy">
-                #include <bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
-using namespace std;
-using namespace __gnu_pbds;
-template<class T> using ordered_set = tree<T, 
-null_type, 
-less<T>, 
-rb_tree_tag, tree_order_statistics_node_update>;
-template<class T> using ordered_multiset = tree<T, 
-null_type, 
-less_equal<T>,
- rb_tree_tag, tree_order_statistics_node_update>;
-#define FAST ios_base::sync_with_stdio(false); cin.tie(nullptr);
-#pragma GCC optimize("Ofast,unroll-loops,no-stack-protector,fast-math,inline")
-typedef string str;
-typedef double D;
-typedef long double LD;
-typedef vector<int> vi;
-typedef vector<vi> vvi;
-typedef pair<int, int> pii;
-typedef vector<pii> vpii;
-typedef vector<vector<int>> vvi;
-typedef vector<vvi> vvvi;
-typedef vector<vector<pair<int, int>>> vvpii;
-typedef vector<bool> vb;
-typedef vector<vector<bool>> vvb;
-typedef vector<str> vs;
-typedef vector<vector<str>> vvs;
-typedef vector<char> vc;
-typedef vector<vector<char>> vvc;
-typedef vector<D> vD;
-typedef vector<vector<D>> vvD;
-
-
-typedef long long ll;
-typedef pair<ll, ll> pll;
-typedef vector<ll> vll;
-typedef vector<pll> vpll;
-typedef vector<vector<ll>> vvll;
-typedef vector<vector<pair<ll, ll>>> vvpll;
-
-const long double pi = acos(-1.0);
-const ll mod7 = 1e9 + 7;
-const ll mod9 = 1e9 + 9;
-const ll mod3 = 998244353;
-const int INF = 1e9;
-
-#define ret return
-#define con continue
-#define pb push_back
-#define pob pop_back
-#define mp make_pair
-#define um unordered_map 
-#define pq priority_queue 
-#define fi first
-#define se second
-#define all(x) x.begin(),x.end()
-#define be(x) x.begin()
-#define en(x) x.end()
-#define sz(x) x.size()
-#define for0(i, n) for (int i=0; i<(n); ++i)
-#define for1(i, n) for (int i=1; i<(n); ++i)
-#define for0r(i, n) for (int i = (n)-1; i>=0; --i)
-#define for1r(i, n) for (int i = (n)-1; i>=1; --i)
-#define for0m(i, n) for (int i=0; i <= (n); ++i)
-#define for1m(i, n) for (int i=1; i <= (n); ++i)
-#define FOR(i,a,b) for (int i=(a); i<(b); ++i)
-
-#define el '\n'
-
-template <typename T>
-istream& operator>>(istream& in, vector<T>& a)
-{
-    for (auto& e : a) in >> e;
-    return in;
-}
- 
-template <typename T>
-ostream& operator<<(ostream& out, const vector<T>& a)
-{
-    for (auto &e : a)
-    {
-        out << e << " ";
-        if (typeid(T) != typeid(int) && typeid(T) != typeid(long long))
-            out << "\n";
-    }
-    return out;
-}
-
-int mod(int n) {ret (n+mod7)%mod7;}
-
-/* LOCAL CONSTs */
-
-/* FUNC(S)FORSOLVE */
-
-/* MAGIC AREA */
-
-void solve() 
-{
-    
-}
-
-
-/*main*/
-int test_cases=1;
-signed main()
-{   FAST;
-    cin>>test_cases;
-    while(test_cases--)
-        solve();
-}
-
+            <div class="code-container">
+                <pre id="codeDisplay"><div class="loading">loading...</div></pre>
             </div>
-            <button class="copy-button" id="copyButton" title="Копировать текст">
+            <button class="copy-button" id="copyButton" title="copy" disabled>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                     <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
                 </svg>
             </button>
-            <div class="copy-notification" id="copyNotification">
-                copied
-            </div>
+            <div class="copy-notification" id="copyNotification"></div>
         </div>
     </div>
-
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const copyButton = document.getElementById('copyButton');
-            const textToCopy = document.getElementById('textToCopy');
+            const codeDisplay = document.getElementById('codeDisplay');
             const copyNotification = document.getElementById('copyNotification');
-            
-            copyButton.addEventListener('click', async function() {
+            let codeContent = '';
+            async function loadCodeFromFile() {
                 try {
-                    await navigator.clipboard.writeText(textToCopy.textContent);
-                    copyNotification.classList.add('show');
+                    const response = await fetch('code.txt');
+                    if (!response.ok) {
+                        throw new Error('Файл не найден');
+                    }
+                    codeContent = await response.text();
+                    codeDisplay.textContent = codeContent;
+                    copyButton.disabled = false;
+                } catch (error) {
+                    console.error('Ошибка загрузки кода:', error);
+                    codeDisplay.innerHTML = '<div class="error">Ошибка загрузки кода. Убедитесь, что файл code.txt находится в той же папке.</div>';
+                    codeContent = `#include <bits/stdc++.h>
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+using namespace std;
+using namespace __gnu_pbds;
+int main() {
+    cout << "Привет, мир!" << endl;
+    return 0;
+}`;
+                    codeDisplay.textContent = codeContent;
+                    copyButton.disabled = false;
+                }
+            }
+            copyButton.addEventListener('click', async function() {
+                if (!codeContent || copyButton.disabled) return;
+                try {
+                    await navigator.clipboard.writeText(codeContent);
+                    showNotification('copied', true);
+                    changeButtonIcon(true);
+                } catch (err) {
+                    console.error('Современный API не сработал:', err);
+                    try {
+                        const textArea = document.createElement('textarea');
+                        textArea.value = codeContent;
+                        textArea.style.position = 'fixed';
+                        textArea.style.left = '-999999px';
+                        textArea.style.top = '-999999px';
+                        document.body.appendChild(textArea);
+                        textArea.focus();
+                        textArea.select();
+                        const successful = document.execCommand('copy');
+                        document.body.removeChild(textArea);
+                        if (successful) {
+                            showNotification('copied', true);
+                            changeButtonIcon(true);
+                        } else {
+                            showNotification('fck u', false);
+                        }
+                    } catch (err2) {
+                        console.error('Старый метод тоже не сработал:', err2);
+                        showNotification('fck u', false);
+                    }
+                }
+            });
+            function showNotification(message, isSuccess) {
+                copyNotification.textContent = message;
+                copyNotification.style.color = isSuccess ? '#28a745' : '#dc3545';
+                copyNotification.classList.add('show');
+                setTimeout(() => {
+                    copyNotification.classList.remove('show');
+                }, 3000);
+            }
+            function changeButtonIcon(success) {
+                if (success) {
                     copyButton.innerHTML = `
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                             <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
                         </svg>
                     `;
+                    copyButton.style.backgroundColor = '#28a745';
                     setTimeout(() => {
-                        copyNotification.classList.remove('show');
                         copyButton.innerHTML = `
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                 <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
                             </svg>
                         `;
-                    }, 2000);  
-                } 
-            });
+                        copyButton.style.backgroundColor = '';
+                    }, 2000);
+                }
+            }
+            loadCodeFromFile();
         });
     </script>
 </body>
